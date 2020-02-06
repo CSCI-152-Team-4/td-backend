@@ -8,7 +8,7 @@ router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
-router.post('/signup', async (req, res) => {
+router.post('/signup', async (req, res) => { // async/await version
   const email = req.body.email.toString().trim().toLowerCase()
   const user = await Users.findOne({email: email})
   try{
@@ -20,7 +20,7 @@ router.post('/signup', async (req, res) => {
     } else {
       await Users.create({
         email: email,
-        password: encryptPass(req.body.password)
+        password: encryptPass(req.body.password.trim())
       })
       res.status(200).send({
         userExists: false,
@@ -29,13 +29,15 @@ router.post('/signup', async (req, res) => {
   }
   } catch(err){
     console.log('err', err)
+    res.status(500).send(false)
   }
 })
-router.post('/login', (req, res) => {
+
+router.post('/login', (req, res) => { // try catch version
   const email = req.body.email.toString().trim().toLowerCase()
   Users.findOne({email: email}).then((doc)=>{
     if(doc){ // user found
-      if(encryptPass(req.body.password) === doc.password){ // passwords match
+      if(encryptPass(req.body.password.toString().trim()) === doc.password){ // passwords match
         res.status(200).send({
           userFound: true,
           loggedIn: true
