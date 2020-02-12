@@ -2,12 +2,15 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var cors = require('cors')
 const mongoose = require('mongoose')
 require('dotenv').config()
 
 
 //initialize app
 var app = express();
+
+app.use(cors({origin:true,credentials: true}));
 
 //setup routes
 var indexRouter = require('./routes/index');

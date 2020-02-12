@@ -33,7 +33,7 @@ router.post('/signup', async (req, res) => { // async/await version
   }
 })
 
-router.post('/login', (req, res) => { // try catch version
+router.post('/login', (req, res) => { // promise chaining version
   const email = req.body.email.toString().trim().toLowerCase()
   Users.findOne({email: email}).then((doc)=>{
     if(doc){ // user found
