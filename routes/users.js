@@ -4,10 +4,6 @@ var router = express.Router();
 const Users = require('../schemas/UserSchema')
 const encryptPass = require('../utils/crypto').encryptPass
 
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
-
 router.post('/signup', async (req, res) => { // async/await version
   const email = req.body.email.toString().trim().toLowerCase()
   const user = await Users.findOne({email: email})
