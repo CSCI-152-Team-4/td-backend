@@ -15,6 +15,7 @@ app.use(cors({origin:true,credentials: true}));
 //setup routes
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var postsRouter = require('./routes/posts');
 
 //setup public file storage
 app.use('/files', express.static(path.join(__dirname + '/file')))
@@ -40,5 +41,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/posts', postsRouter);
+
+
 
 module.exports = app;

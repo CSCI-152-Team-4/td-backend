@@ -11,7 +11,7 @@ router.post('/signup', async (req, res) => { // async/await version
     if(user){
       res.status(200).send({
         userExists: true,
-        userCreated: false
+        userCreated: false,
       })
     } else {
       await Users.create({
@@ -20,7 +20,8 @@ router.post('/signup', async (req, res) => { // async/await version
       })
       res.status(200).send({
         userExists: false,
-        userCreated: true
+        userCreated: true,
+        userId: user._id
       })
   }
   } catch(err){
@@ -36,7 +37,8 @@ router.post('/login', (req, res) => { // promise chaining version
       if(encryptPass(req.body.password.toString().trim()) === doc.password){ // passwords match
         res.status(200).send({
           userFound: true,
-          loggedIn: true
+          loggedIn: true,
+          userId: doc._id
         })
       } else { // passwords don't match
         res.status(200).send({
