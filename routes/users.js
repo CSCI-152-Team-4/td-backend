@@ -9,6 +9,7 @@ router.post('/signup', async (req, res) => { // async/await version
   const user = await Users.findOne({email: email})
   try{
     if(user){
+      console.log('user', user)
       res.status(200).send({
         userExists: true,
         userCreated: false,
@@ -56,6 +57,13 @@ router.post('/login', (req, res) => { // promise chaining version
     console.log('err', err)
     res.status(500).send(false)
   })
+})
+
+router.post('/delete', async (req, res) => {
+  await Users.deleteOne({
+    _id: req.body.userId
+  })
+  res.status(200).send(true)
 })
 
 module.exports = router;

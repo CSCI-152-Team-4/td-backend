@@ -13,21 +13,18 @@ var PostSchema = new Schema({
     default: '',
     required: true
   },
-  dateCreated: {
-    type: Date,
-    default: Date.now()
-  },
   poster: {
     type: Schema.Types.ObjectId, 
     ref: 'User' 
   },
   comments: {
     type: [Schema.Types.ObjectId],
-    ref: 'Post'
+    ref: 'Comment',
+    default: []
   },
   tags: {
-    type: [Schema.Types.ObjectId],
-    ref: "Tag"
+    type: [String],
+    default: []
   }, 
   views: {
     type: Number,
@@ -37,10 +34,16 @@ var PostSchema = new Schema({
     type: Number,
     default: 0,
   }
+}, {
+  toObject: { virtuals: true },
+  toJSON: { virtuals: true },
+  timestamps: true
 });
 
 PostSchema.virtual('answers').get(function() {
-  return this.comments.length
+  if(this.comments)
+    return this.comments.length
+  else return 0
 });
 
 var PostModel = mongoose.model('Post', PostSchema);

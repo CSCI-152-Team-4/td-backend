@@ -8,18 +8,30 @@ router.get('/', (req, res, next) => {
 })
 
 router.post('/', async (req, res) => {
-  const { title, body, poster } = req.body
+  const { title, body, poster, tags } = req.body
   try {
-    let newPost = await Posts.create({
+    await Posts.create({
       title: title,
       body: body,
       poster: poster,
       dateCreated: new Date().getTime(),
+      comments: [],
+      tags: ["tag 1", "tag 2"]
     })
     res.status(200).send(true)
   } catch(err){
     console.log('err', err)
     res.status(500).send("err creating post")
+  }
+})
+
+router.get('/:limit', async (req, res) => {
+  try{
+    const posts = await Posts.find({}, "title views votes answers tags").sort("-dateCreated").limit(Number(req.params.limit))
+    res.status(200).send(posts)
+  } catch(err){
+    console.log('err getting posts', err)
+    res.status(500).send(false)
   }
 })
 module.exports = router;

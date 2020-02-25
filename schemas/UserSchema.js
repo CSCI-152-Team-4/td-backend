@@ -22,10 +22,8 @@ var UserSchema = new Schema({
     type: String,
     default: ''
   },
-  dateCreated: {
-    type: Date,
-    default: Date.now()
-  }
+},{
+  timestamps: true
 });
 
 var UserModel = mongoose.model('User', UserSchema);
