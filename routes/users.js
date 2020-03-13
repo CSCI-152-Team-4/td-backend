@@ -4,6 +4,19 @@ var router = express.Router();
 const Users = require('../schemas/UserSchema')
 const encryptPass = require('../utils/crypto').encryptPass
 
+
+router.post('/changePass', async (req, res) => {
+const user = await Users.findById(req.body.id);
+if(user){
+  if(encryptPass(req.body.password) === user.oldPassword){
+    user.password = encryptPass(req.body.newPassword);
+    user.save();
+  }
+}
+}
+)
+
+
 router.post('/signup', async (req, res) => { // async/await version
   const email = req.body.email.toString().trim().toLowerCase()
   const user = await Users.findOne({email: email})
