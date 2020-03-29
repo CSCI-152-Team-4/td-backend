@@ -6,15 +6,20 @@ const encryptPass = require('../utils/crypto').encryptPass
 
 
 router.post('/changePass', async (req, res) => {
-const user = await Users.findById(req.body.id);
-if(user){
-  if(encryptPass(req.body.password) === user.oldPassword){
-    user.password = encryptPass(req.body.newPassword);
-    user.save();
+  const user = await Users.findById(req.body.user);
+  if(user){
+    console.log('user', user, req.body.newPassword)
+    if(encryptPass(req.body.oldPassword) === user.password){
+      user.password = encryptPass(req.body.newPassword);
+      user.save();
+      res.send({user_found : true});
+    } else {
+      res.send({password_found : false});
+    }
+  } else {
+    res.send({user_found : false});
   }
-}
-}
-)
+});
 
 
 router.post('/signup', async (req, res) => { // async/await version
