@@ -17,11 +17,10 @@ var PostSchema = new Schema({
     type: Schema.Types.ObjectId, 
     ref: 'User' 
   },
-  comments: {
-    type: [Schema.Types.ObjectId],
+  comments: [{
+    type: Schema.Types.ObjectId,
     ref: 'Comment',
-    default: []
-  },
+  }],
   tags: {
     type: [String],
     default: []
