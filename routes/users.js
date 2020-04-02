@@ -1,8 +1,47 @@
 var express = require('express');
 var router = express.Router();
 
+{ /* var url = 'mongodb://hostlocal:3000/users'; */}
+
 const Users = require('../schemas/UserSchema')
 const encryptPass = require('../utils/crypto').encryptPass
+
+{/*
+router.get('/get-data', function(req, res, next) {
+  var resultArray = [];
+  mongo.connect(urlm function(err,db) {
+    assert.equal(null, err);
+    var cursor = db.collection('users').find();
+    cursor.forEach(funct ion(doc, err) {
+      assert.equal(null, err);
+      resultArray.push(doc);
+    }, function() {
+        db.close();
+        res.render('index', {items: resultArray});
+    });
+  });
+});
+
+router.post('/insert', function(req, res, next){
+ var item = {
+    username: req.body.username,
+    firstName: req.body.firstName,
+    lastName: req.body.lastName
+  };
+
+  mongo.connect(url, function(err, db) {
+    assert.equal(null, err);
+    db.collection('users').insertOne(item, function(err, result) {
+      assert.equal(null, err);
+      console.log("Item inserted');
+      db.close();
+    });
+  });
+
+  res.redirect('/signup');
+});
+
+*/}
 
 router.post('/signup', async (req, res) => { // async/await version
   const email = req.body.email.toString().trim().toLowerCase()
