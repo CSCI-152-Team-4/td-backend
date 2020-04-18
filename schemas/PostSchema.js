@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+const io = require("../socket").io;
 
 //Define a schema
 var Schema = mongoose.Schema;
@@ -46,5 +47,19 @@ PostSchema.virtual('answers').get(function() {
 });
 
 var PostModel = mongoose.model('Post', PostSchema);
+
+PostModel.watch().on("change", update => {
+  if (update.operationType === "update") {
+    io.sockets.emit("update-post", update.documentKey._id);
+  } else if (update.operationType === "insert") {
+    io.sockets.emit("new-post", update.documentKey._id);
+  } else if (update.operationType === "delete") {
+    io.sockets.emit("delete-post", update.documentKey._id);
+  } else if (update.operationType === "replace") {
+    io.sockets.emit("update-post", update.documentKey._id);
+  } else {
+    console.log("uncaught update", update);
+  }
+});
 
 module.exports=PostModel;

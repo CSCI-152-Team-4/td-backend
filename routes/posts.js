@@ -16,7 +16,7 @@ router.post('/', async (req, res) => {
       poster: poster,
       dateCreated: new Date().getTime(),
       comments: [],
-      tags: tags
+      tags: tags || []
     })
     res.status(200).send(true)
   } catch(err){
@@ -25,6 +25,15 @@ router.post('/', async (req, res) => {
   }
 })
 
+router.get('/one/:postId', async (req, res) => {
+  try{
+    const post = await Posts.findById(req.params.postId, "title views votes answers tags body")
+    res.status(200).send(post)
+  } catch(err){
+    console.log('err getting posts', err)
+    res.status(500).send(false)
+  }
+})
 router.get('/:limit', async (req, res) => {
   try{
     const posts = await Posts.find({}, "title views votes answers tags body").sort("-createdAt").limit(Number(req.params.limit))
