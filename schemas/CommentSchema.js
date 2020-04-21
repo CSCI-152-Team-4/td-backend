@@ -18,8 +18,8 @@ var CommentSchema = new Schema({
     default: 0,
   }
 }, {
-  toObject: { virtuals: true },
-  toJSON: { virtuals: true },
+  // toObject: { virtuals: true },
+  // toJSON: { virtuals: true },
   timestamps: true
 });
 
