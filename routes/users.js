@@ -23,7 +23,7 @@ router.post("/signup", async (req, res) => {
     .toString()
     .trim()
     .toLowerCase();
-  const user = await Users.findOne({ email: email });
+  var user = await Users.findOne({ email: email });
   try {
     if (user) {
       console.log("user", user);
@@ -32,7 +32,7 @@ router.post("/signup", async (req, res) => {
         userCreated: false
       });
     } else {
-      const user = await Users.create({
+      user = await Users.create({
         email: email,
         password: encryptPass(req.body.password.trim())
       });
