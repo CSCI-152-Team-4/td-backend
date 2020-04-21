@@ -24,6 +24,7 @@ var server = http.createServer(app);
 var socketApi = require('../socket');
 var io = socketApi.io;
 io.attach(server);
+io.set('origins', '*:*');
 
 /**
  * Listen on provided port, on all network interfaces.
