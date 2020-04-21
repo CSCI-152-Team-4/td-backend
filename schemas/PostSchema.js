@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 const io = require("../socket").io;
+const Comments = require('./CommentSchema')
 
 //Define a schema
 var Schema = mongoose.Schema;
@@ -33,17 +34,15 @@ var PostSchema = new Schema({
   votes: {
     type: Number,
     default: 0,
+  },
+  answers: {
+    type: Number,
+    default: 0
   }
 }, {
   toObject: { virtuals: true },
   toJSON: { virtuals: true },
   timestamps: true
-});
-
-PostSchema.virtual('answers').get(function() {
-  if(this.comments)
-    return this.comments.length
-  else return 0
 });
 
 var PostModel = mongoose.model('Post', PostSchema);

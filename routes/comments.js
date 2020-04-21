@@ -22,6 +22,7 @@ router.post("/new", async (req, res, next) => {
           votes: 0
         })
       );
+      post.answers = post.comments.length
       post.save();
       res.send({ ok: true });
     } else {
