@@ -32,8 +32,8 @@ var PostSchema = new Schema({
     of: Number
   },
   votes: {
-    type: Number,
-    default: 0,
+    type: Map,
+    of: Number,
   },
   answers: {
     type: Number,
