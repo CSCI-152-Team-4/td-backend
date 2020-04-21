@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 const io = require("../socket").io;
+const Comments = require('./CommentSchema')
 
 //Define a schema
 var Schema = mongoose.Schema;
@@ -27,23 +28,21 @@ var PostSchema = new Schema({
     default: []
   }, 
   views: {
-    type: Number,
-    default: 0
+    type: Map,
+    of: Number
   },
   votes: {
+    type: Map,
+    of: Number,
+  },
+  answers: {
     type: Number,
-    default: 0,
+    default: 0
   }
 }, {
   toObject: { virtuals: true },
   toJSON: { virtuals: true },
   timestamps: true
-});
-
-PostSchema.virtual('answers').get(function() {
-  if(this.comments)
-    return this.comments.length
-  else return 0
 });
 
 var PostModel = mongoose.model('Post', PostSchema);
@@ -52,6 +51,7 @@ PostModel.watch().on("change", update => {
   if (update.operationType === "update") {
     io.sockets.emit("update-post", update.documentKey._id);
   } else if (update.operationType === "insert") {
+    console.log('inserted new')
     io.sockets.emit("new-post", update.documentKey._id);
   } else if (update.operationType === "delete") {
     io.sockets.emit("delete-post", update.documentKey._id);

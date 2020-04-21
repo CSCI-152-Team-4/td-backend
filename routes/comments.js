@@ -14,7 +14,6 @@ router.post("/new", async (req, res, next) => {
   try {
     const post = await Post.findById(req.body.postId);
     if (post) {
-      console.log('req', req.body)
       post.comments.push(
         await Comment.create({
           body: req.body.body,
@@ -22,6 +21,7 @@ router.post("/new", async (req, res, next) => {
           votes: 0
         })
       );
+      post.answers = post.comments.length
       post.save();
       res.send({ ok: true });
     } else {
