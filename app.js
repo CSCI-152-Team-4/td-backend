@@ -24,7 +24,7 @@ app.use("/files", express.static(path.join(__dirname + "/file")));
 var url = process.env.mongo_url;
 
 mongoose
-  .connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(url, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: true })
   .then(() => {
     console.log("mongo connected success");
   })
