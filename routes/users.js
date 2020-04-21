@@ -32,7 +32,7 @@ router.post("/signup", async (req, res) => {
         userCreated: false
       });
     } else {
-      await Users.create({
+      const user = await Users.create({
         email: email,
         password: encryptPass(req.body.password.trim())
       });
