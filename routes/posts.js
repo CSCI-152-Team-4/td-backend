@@ -31,10 +31,16 @@ router.put('/view/:postId', async (req, res) => {
   console.log(postId, userId);
   try {
     const post = await Posts.findById(postId)
-    post.views.set(userId, 1)
-    await post.save();
+    if(!post.views){
+      post.views = new Map()
+    }
+    if(!post.views.get(userId)){
+      post.views.set(userId, 1)
+      await post.save();
+    }
     res.send(true)
   } catch(err){
+    console.log("err", err)
     res.send(false)
   }
 })
