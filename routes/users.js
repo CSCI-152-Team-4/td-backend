@@ -1,6 +1,6 @@
 var express = require("express");
+const mongoose = require('mongoose')
 var router = express.Router();
-
 const Users = require("../schemas/UserSchema");
 const encryptPass = require("../utils/crypto").encryptPass;
 
@@ -32,14 +32,15 @@ router.post("/signup", async (req, res) => {
         userCreated: false
       });
     } else {
-      user = await Users.create({
+      newUser = await Users.create({
         email: email,
-        password: encryptPass(req.body.password.trim())
+        password: encryptPass(req.body.password.trim()),
+        friendCode: String(new mongoose.Types.ObjectId()).slice(3,12)
       });
       res.status(200).send({
         userExists: false,
         userCreated: true,
-        userId: user._id
+        user: newUser,
       });
     }
   } catch (err) {
@@ -63,7 +64,7 @@ router.post("/login", (req, res) => {
           res.status(200).send({
             userFound: true,
             loggedIn: true,
-            userId: doc._id
+            user: doc
           });
         } else {
           // passwords don't match

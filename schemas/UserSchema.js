@@ -26,6 +26,10 @@ var UserSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'User',
   }],
+  friendCode: {
+    type: String,
+    required: true
+  }
 },{
   timestamps: true
 });
