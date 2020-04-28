@@ -16,6 +16,7 @@ var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 var postsRouter = require("./routes/posts");
 var commentRouter = require("./routes/comments");
+var messagesRouter = require("./routes/messages");
 
 //setup public file storage
 app.use("/files", express.static(path.join(__dirname + "/file")));
@@ -44,5 +45,6 @@ app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/posts", postsRouter);
 app.use("/comments", commentRouter);
+app.use("/messages", messagesRouter);
 
 module.exports = app;

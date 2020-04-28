@@ -7,21 +7,29 @@ var UserSchema = new Schema({
   email: {
     type: String,
     default: '',
-    required: true
+    required: true,
   },
   password:{
     type: String,
     default: '', 
-    required: true
+    required: true,
   },
   firstName: {
     type: String,
-    default: ''
+    default: '',
   },
   lastName: {
     type: String,
-    default: ''
+    default: '',
   },
+  friends: [{
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+  }],
+  friendCode: {
+    type: String,
+    required: true
+  }
 },{
   timestamps: true
 });
