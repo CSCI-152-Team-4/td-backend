@@ -4,16 +4,18 @@ var router = express.Router();
 const Users = require("../schemas/UserSchema");
 const encryptPass = require("../utils/crypto").encryptPass;
 
-//app.js
-//app.use('/users', userRouter)
-
-router.post("/changePass", async (req, res) => {
-  const user = await Users.findById(req.body.id);
-  if (user) {
-    if (encryptPass(req.body.password) === user.oldPassword) {
+router.post('/changePass', async (req, res) => {
+  const user = await Users.findById(req.body.userId);
+  if(user){
+    if(encryptPass(req.body.oldPassword) === user.password){
       user.password = encryptPass(req.body.newPassword);
       user.save();
+      res.send({user_found : true});
+    } else {
+      res.send({password_found : false});
     }
+  } else {
+    res.send({user_found : false});
   }
 });
 
@@ -121,7 +123,7 @@ router.get("/friends/:userId", async (req, res) => {
 
 router.post("/delete", async (req, res) => {
   await Users.deleteOne({
-    _id: req.body.userId,
+    _id: req.body.user,
   });
   res.status(200).send(true);
 });
