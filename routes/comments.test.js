@@ -1,9 +1,14 @@
-const mongoose = require('mongoose');
-const CommentSchema = require('../schemas/CommentSchema');
-const CommentData = { body: 'New body', commenter: _id, votes: 2};
 //Mongo Setup
 require("dotenv").config();
 var url = process.env.mongo_url;
+
+const mongoose = require('mongoose');
+const CommentSchema = require('../schemas/CommentSchema');
+const CommentData = {
+    body: 'New body',
+    //commenter: '',
+    votes: 2
+};
 
 describe('Comments Schema Test', () => {
 
@@ -17,29 +22,29 @@ describe('Comments Schema Test', () => {
         });
     });
 
-    it('create & save message successfully', async () => {
+    it('create & save comment successfully', async () => {
         const validComment = new CommentSchema(CommentData);
         const savedComment = await validComment.save();
         // Object Id should be defined when successfully saved to MongoDB.
         expect(savedComment._id).toBeDefined();
         expect(savedComment.body).toBe(CommentData.body);
-        expect(savedComment.commenter).toBe(CommentData.commenter);
+        //expect(savedComment.commenter).toBeDefined(); or expect(savedComment.commenter).toBe(CommentData.commenter);
         expect(savedComment.votes).toBe(CommentData.votes);
     });
 
     // Test Schema is working!!!
     // You shouldn't be able to add in any field that isn't defined in the schema
     it('insert comment successfully, but the field not defined in schema should be undefined', async () => {
-        const commentWithInvalidField = new CommentSchema({ body: 'body', commenter: _id, votes: 1, animal: 'Parrot' });
+        const commentWithInvalidField = new CommentSchema({ body: 'body', /*commenter: ,*/ votes: 1, animal: 'Parrot' });
         const savedCommentWithInvalidField = await commentWithInvalidField.save();
         expect(savedCommentWithInvalidField._id).toBeDefined();
         expect(savedCommentWithInvalidField.animal).toBeUndefined();
     });
 
     // Test Validation is working!!!
-    // It should us told us the errors in on body field.
-    it('create comment without required field should failed', async () => {
-        const commentWithoutRequiredField = new CommentSchema({ commenter: 'some-user-id'});
+    // It should us told us the errors in on commenter field.
+    it('create comment without required field, should failed', async () => {
+        const commentWithoutRequiredField = new CommentSchema({ votes: 6 });
         let err;
         try {
             const savedCommentWithoutRequiredField = await commentWithoutRequiredField.save();
@@ -48,6 +53,6 @@ describe('Comments Schema Test', () => {
             err = error
         }
         expect(err).toBeInstanceOf(mongoose.Error.ValidationError)
-        expect(err.errors.body).toBeDefined();
+        expect(err.errors.commenter).toBeDefined();
     });
 })

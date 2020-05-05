@@ -1,9 +1,17 @@
-const mongoose = require('mongoose');
-const UserSchema = require('../schemas/UserSchema');
-const userData = { email: 'testing@mail.fresnostate.edu', password: 'one', firstName: 'test', userName: 'username1', lastName: 'that', friends: [], friendCode: _id};
 //Mongo Setup
 require("dotenv").config();
 var url = process.env.mongo_url;
+
+const mongoose = require('mongoose');
+const UserSchema = require('../schemas/UserSchema');
+const userData = {
+    email: 'testing@mail.fresnostate.edu',
+    password: 'one', firstName: 'test',
+    userName: 'username1',
+    lastName: 'that',
+    //friends: [],
+    friendCode: null
+};
 
 describe('User Schema Test', () => {
 
