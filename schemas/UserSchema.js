@@ -18,6 +18,10 @@ var UserSchema = new Schema({
     type: String,
     default: '',
   },
+  userName: {
+    type: String,
+    default: '',
+  },
   lastName: {
     type: String,
     default: '',
