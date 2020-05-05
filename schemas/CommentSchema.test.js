@@ -3,7 +3,7 @@ require("dotenv").config();
 var url = process.env.mongo_url;
 
 const mongoose = require('mongoose');
-const CommentSchema = require('../schemas/CommentSchema');
+const CommentSchema = require('./CommentSchema');
 const CommentData = {
     body: 'New body',
     //commenter: '',

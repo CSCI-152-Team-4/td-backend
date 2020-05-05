@@ -3,7 +3,7 @@ require("dotenv").config();
 var url = process.env.mongo_url;
 
 const mongoose = require('mongoose');
-const MessageSchema = require('../schemas/MessageSchema');
+const MessageSchema = require('./MessageSchema');
 const MessageData = {
     body: 'one body',
     //sender: _id,

@@ -3,14 +3,14 @@ require("dotenv").config();
 var url = process.env.mongo_url;
 
 const mongoose = require('mongoose');
-const UserSchema = require('../schemas/UserSchema');
+const UserSchema = require('./UserSchema');
 const userData = {
     email: 'testing@mail.fresnostate.edu',
     password: 'one', firstName: 'test',
     userName: 'username1',
     lastName: 'that',
     //friends: [],
-    friendCode: null
+    //friendCode: 
 };
 
 describe('User Schema Test', () => {
@@ -35,7 +35,7 @@ describe('User Schema Test', () => {
         expect(savedUser.firstName).toBe(userData.firstName);
         expect(savedUser.lastName).toBe(userData.lastName);
         expect(savedUser.friends).toBe(userData.friends);
-        expect(savedUser.friendCode).toBe(userData.friendCode);
+        //expect(savedUser.friendCode).toBe(userData.friendCode);
     });
 
     // Test Schema is working!!!
@@ -46,7 +46,7 @@ describe('User Schema Test', () => {
         expect(savedUserWithInvalidField._id).toBeDefined();
         expect(savedUserWithInvalidField.name).toBeUndefined();
     });
-
+    
     // Test Validation is working!!!
     // It should us told us the errors in on password field.
     it('create user without required field should failed', async () => {
