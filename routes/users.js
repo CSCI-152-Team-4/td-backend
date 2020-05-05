@@ -8,13 +8,19 @@ const encryptPass = require("../utils/crypto").encryptPass;
 //app.use('/users', userRouter)
 
 router.post("/changePass", async (req, res) => {
-  const user = await Users.findById(req.body.id);
+  const user = await Users.findById(req.body.userId);
+  console.log(req.body)
   if (user) {
-    if (encryptPass(req.body.password) === user.oldPassword) {
+    console.log('user found', user)
+    if (encryptPass(req.body.oldPassword) === user.password) {
       user.password = encryptPass(req.body.newPassword);
       user.save();
+      res.send(true)
+    } else {
+      console.log("incorrect password")
+      res.send(false)
     }
-  }
+  } else res.send(false)
 });
 
 router.post("/signup", async (req, res) => {
