@@ -19,6 +19,23 @@ router.post("/changePass", async (req, res) => {
   }
 });
 
+/*
+router.get('/get-data', function(req, res, next) {
+  var resultArray = [];
+  mongo.connect(urlm function(err,db) {
+    assert.equal(null, err);
+    var cursor = db.collection('users').find();
+    cursor.forEach(funct ion(doc, err) {
+      assert.equal(null, err);
+      resultArray.push(doc);
+    }, function() {
+        db.close();
+        res.render('index', {items: resultArray});
+    });
+  });
+});
+*/
+
 router.post("/signup", async (req, res) => {
   // async/await version
   const email = req.body.email
