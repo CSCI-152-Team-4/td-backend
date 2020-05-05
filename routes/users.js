@@ -4,6 +4,8 @@ var router = express.Router();
 const Users = require("../schemas/UserSchema");
 const encryptPass = require("../utils/crypto").encryptPass;
 
+/* var url = 'mongodb://hostlocal:3000/users'; */
+
 //app.js
 //app.use('/users', userRouter)
 
