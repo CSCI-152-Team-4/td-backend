@@ -33,8 +33,12 @@ router.post("/signup", async (req, res) => {
       });
     } else {
       await Users.create({
+        //username: username,
+        //firstName: firstName,
+        //lastName: lastName,
         email: email,
         password: encryptPass(req.body.password.trim())
+        
       });
       res.status(200).send({
         userExists: false,

@@ -7,12 +7,16 @@ var UserSchema = new Schema({
   email: {
     type: String,
     default: '',
-    required: true
+    required: true,
   },
   password:{
     type: String,
     default: '', 
-    required: true
+    required: true,
+  },
+  username: {
+    type: String,
+    default: ''
   },
   firstName: {
     type: String,
@@ -23,7 +27,7 @@ var UserSchema = new Schema({
     default: ''
   },
 },{
-  timestamps: true
+  timestamps: true //creates fields for when user is created or modified
 });
 
 var UserModel = mongoose.model('User', UserSchema);
