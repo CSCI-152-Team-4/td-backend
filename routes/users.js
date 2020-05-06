@@ -33,7 +33,7 @@ router.post("/signup", async (req, res) => {
     } else {
       newUser = await Users.create({
         email: email,
-        username: req.body.username,
+        userName: req.body.username,
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         password: encryptPass(req.body.password.trim()),
